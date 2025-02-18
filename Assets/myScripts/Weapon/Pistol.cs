@@ -13,6 +13,7 @@ public class Pistol : Weapon
         bulletsPerBurst = 1;
         bulletVelocity = 500;
         timeBetweenShots = 0f;
+        weaponDamage = 20;
         weapon = new SingleShoot(this);
         
     }
@@ -21,10 +22,15 @@ public class Pistol : Weapon
 
     public override void Reload()
     {
-        canSwitch = false;
-        canShoot = false;
-        animator.SetTrigger("Reload");
-        StartCoroutine(ReloadCoroutine());       
+        if (canShoot)
+        {
+            canSwitch = false;
+            canShoot = false;
+            animator.SetTrigger("Reload");
+            StartCoroutine(ReloadCoroutine());
+        }
+
+    
        
     }
 

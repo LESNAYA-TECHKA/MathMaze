@@ -1,11 +1,14 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
 public class PlayerWeaponController : MonoBehaviour
 {
+    //if you need to implement the selection of weapons from the ground, uncomment the compromised code.
     public static PlayerWeaponController instance { get; private set; }
 
     [SerializeField] private List<GameObject> weaponSlots;
@@ -13,12 +16,17 @@ public class PlayerWeaponController : MonoBehaviour
     private Weapon weaponSlot1;
     private Weapon weaponSlot2;
     private bool firstSlotIsActive;
+    private bool canSwitch; 
+
+    //It was used with the selection of weapons
+    /*
     private bool isWeapon = false;
     private float maxDistance = 1.8f;
     private int weaponLayerMask; // Создаём маску для слоя "Weapon"
 
     private Outline selected;
     private GameObject canTake;
+    */
 
 
     private void Awake()
@@ -29,18 +37,26 @@ public class PlayerWeaponController : MonoBehaviour
             instance = this;
         weaponSlot1 = weaponSlots[0].GetComponentInChildren<Weapon>();
         weaponSlot2 = weaponSlots[1].GetComponentInChildren<Weapon>();
+        canSwitch = true;
     }
 
     private void Start()
     {
-        weaponLayerMask = LayerMask.GetMask("Weapon");
+        //It was used with the selection of weapons
+        //weaponLayerMask = LayerMask.GetMask("Weapon");
+
         firstSlotIsActive = true;
         weaponSlots[1].gameObject.SetActive(false);
-        InvokeRepeating(nameof(CheckForWeapon), 0f, 0.15f);
+        weaponSlot1.AmmoUpdate();
+
+        //It was used with the selection of weapons
+        //InvokeRepeating(nameof(CheckForWeapon), 0f, 0.15f);
 
     }
 
 
+    //it works, but I decided not to use it. Can take any Weapon.
+    /*
     private void CheckForWeapon()
     {
 
@@ -133,10 +149,13 @@ public class PlayerWeaponController : MonoBehaviour
 
     }
 
-
+    */
 
     public void SelectNextSlot()
     {
+        if (!canSwitch)
+            return;
+
         if (firstSlotIsActive && weaponSlot1.canSwitch)
         {
             weaponSlots[0].gameObject.SetActive(false);
@@ -156,9 +175,15 @@ public class PlayerWeaponController : MonoBehaviour
             firstSlotIsActive = true;
 
         }
-
+        StartCoroutine(Cooldown());
     }
 
+    private IEnumerator Cooldown()
+    {
+        canSwitch = false; 
+        yield return new WaitForSeconds(1f); // Ждем 1 секунду
+        canSwitch = true; // Разблокируем смену оружия
+    }
 
     public void Fire()
     {

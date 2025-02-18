@@ -12,18 +12,22 @@ public class Ak_47:Weapon
         bulletsPerBurst = 30;
         bulletVelocity = 500;
         timeBetweenShots = 0.1f;
+        weaponDamage = 10;
         weapon = new AutoShoot(this);
-
     }
 
 
 
     public override void Reload()
     {
-        canSwitch = false;
-        canShoot = false;
-        animator.SetTrigger("Reload");
-        StartCoroutine(ReloadCoroutine());
+        if(canShoot)
+        {
+            canSwitch = false;
+            canShoot = false;
+            animator.SetTrigger("Reload");
+            StartCoroutine(ReloadCoroutine());
+        }
+
     }
 
 

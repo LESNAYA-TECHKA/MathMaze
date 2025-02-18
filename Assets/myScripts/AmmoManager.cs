@@ -5,7 +5,9 @@ public class AmmoManager : MonoBehaviour
 {
     public static AmmoManager instance { get; set; }
 
-    public TextMeshProUGUI ammoDisplay;
+    public TextMeshProUGUI text;
+
+
     private void Awake()
     {
         if (instance != null && instance != this)

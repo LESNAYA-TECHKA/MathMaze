@@ -21,9 +21,7 @@ public class PlayerInputs : MonoBehaviour
         onGround.shoot.canceled += ctx => PlayerWeaponController.instance.StopFire();
         onGround.reload.started += ctx => PlayerWeaponController.instance.Reload();
         onGround.SelectWeapon.started += ctx => PlayerWeaponController.instance.SelectNextSlot();
-        onGround.TakeWeapon.started += ctx => PlayerWeaponController.instance.TakeWeapon();
-
-
+        //onGround.TakeWeapon.started += ctx => PlayerWeaponController.instance.TakeWeapon();
     }
 
     private void FixedUpdate()

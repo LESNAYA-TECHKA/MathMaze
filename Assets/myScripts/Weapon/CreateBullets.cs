@@ -47,15 +47,38 @@ public class CreateBullets : MonoBehaviour
     {
         if (creator.bulletsLeft != 0)
         {
+
+            //GameObject bullet = Instantiate(creator.bulletPrefab, creator.bulletSpawn.position, Quaternion.identity);
+            //var bulletDamage = bullet.GetComponent<Bullet>().bulletDamage = creator.weaponDamage;
+            //bullet.transform.forward = shootingDirection;
+
+            //bullet.GetComponent<Rigidbody>().AddForce(creator.bulletSpawn.forward.normalized * creator.bulletVelocity, ForceMode.Impulse);
+
+            //creator.StartCoroutine(DestroyBulletAfterTime(bullet, creator.bulletLifeTime));
+
+
+
             Vector3 shootingDirection = CaculateDirectionAndSpread().normalized;
-            GameObject bullet = Instantiate(creator.bulletPrefab, creator.bulletSpawn.position, Quaternion.identity);
-            bullet.transform.forward = shootingDirection;
-            creator.animator.SetTrigger("Shoot");
-            creator.soundSource.PlayOneShot(creator.mySounds.shoot);
-            bullet.GetComponent<Rigidbody>().AddForce(creator.bulletSpawn.forward.normalized * creator.bulletVelocity, ForceMode.Impulse);
-            creator.bulletsLeft--;
-            creator.StartCoroutine(DestroyBulletAfterTime(bullet, creator.bulletLifeTime));
-            creator.AmmoUpdate();
+            Ray ray = new Ray(creator.bulletSpawn.position, creator.bulletSpawn.forward);
+            RaycastHit hit;
+
+            // ѕровер€ем, есть ли столкновение с чем-либо
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                var hitTransform = hit.transform;
+                var whereWasHit = hit.point;
+                var normal = hit.normal;
+                Bullet bullet = new Bullet();
+                bullet.bulletDamage = creator.weaponDamage;
+                bullet.hitPlace = whereWasHit;
+                bullet.hitTransform = hitTransform;
+                bullet.normal = normal;
+                bullet.BulletEffects(hit.collider.tag);
+                creator.animator.SetTrigger("Shoot");
+                creator.soundSource.PlayOneShot(creator.mySounds.shoot);
+                creator.bulletsLeft--;
+                creator.AmmoUpdate();
+            }
         }
         else
             creator.soundSource.PlayOneShot(creator.mySounds.empty);

@@ -2,21 +2,108 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public int bulletDamage;
+    public Vector3 hitPlace;
+    public Transform hitTransform;
+
+
+    public Vector3 normal;
+
+    public void BulletEffects(string unit)
+    {
+        if(unit == "Player")
+        {
+
+        }
+        switch(unit)
+        {
+            case "Player":
+                //Debug.Log("Hit Player");\
+                HitPlayer();
+                break;
+            case "Wall":
+                //Debug.Log("Hit Wall");
+                HitWall();
+                break;
+            case "Enemie":
+                //Debug.Log("Hit Enemie");
+                HitEnemie();
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    private void HitPlayer()
+    {
+        var enemie = hitTransform.GetComponent<PlayerHealth>();
+        enemie.TakeDamage(bulletDamage);
+    }
+
+
+    private void HitEnemie()
+    {
+        var enemie = hitTransform.GetComponent<Enemie>();
+        enemie.TakeDamage(bulletDamage);
+    }
+
+
+    private void HitWall()
+    {
+        // Используем hitPlace (точка попадания) и нормаль из RaycastHit
+        GameObject hole = Instantiate(
+            GlobalReferences.instance.bulletEffectsPrefab,
+            hitPlace + normal * 0.01f,
+            Quaternion.LookRotation(normal)
+        );
+
+        // Прикрепляем эффект к объекту, в который попали
+        hole.transform.SetParent(hitTransform);
+        Debug.Log(hitTransform);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Target"))
-        {
-            Debug.Log($"HIT {collision.gameObject.name} !");
-            CreateBulletImpactEffect(collision);
-            Destroy(gameObject);
-        }
-
         if (collision.gameObject.CompareTag("Wall"))
         {
             Debug.Log($"HIT {collision.gameObject.name} !");
             CreateBulletImpactEffect(collision);
             Destroy(gameObject);
         }
+
+        if (collision.gameObject.CompareTag("Enemie"))
+        {
+            collision.gameObject.GetComponent<Enemie>().TakeDamage(bulletDamage);
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Hit Character");
+        }
+
     }
 
     private void CreateBulletImpactEffect(Collision objectHit)

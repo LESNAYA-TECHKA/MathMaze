@@ -19,7 +19,7 @@ public abstract class Weapon : MonoBehaviour
     public IFireWeapon weapon;
     public bool stopFire = false;
     public bool canShoot = true;
-
+    public int weaponDamage;
     public WeaponPosition myPosition;
     public WeaponSound mySounds;
     public AudioSource soundSource;
@@ -35,15 +35,10 @@ public abstract class Weapon : MonoBehaviour
     }
 
 
-    private void Update()
+    public virtual void AmmoUpdate()
     {
-        
-    }
-
-    public void AmmoUpdate()
-    {
-        if (AmmoManager.instance.ammoDisplay != null)
-            AmmoManager.instance.ammoDisplay.text = $"{bulletsLeft}/{magazineSize}";
+        if (AmmoManager.instance.text != null)
+            AmmoManager.instance.text.text = $"{bulletsLeft}/{magazineSize}";
 
     }
 
