@@ -187,6 +187,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     public void Fire()
     {
+        //Debug.Log("I shoot");
         if (firstSlotIsActive)
             weaponSlot1.Fire();
         else
@@ -195,6 +196,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     public void Reload()
     {
+        //Debug.Log("I reload");
         if (firstSlotIsActive)
             weaponSlot1.Reload();
         else
@@ -203,6 +205,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     public void StopFire()
     {
+        //Debug.Log("I stop");
         if (firstSlotIsActive)
         {
             weaponSlot1.StopFire();

@@ -1,30 +1,31 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
 
-    public int health;
+    public Slider health;
     public TextMeshProUGUI text;
 
     private void Awake()
     {
-        health = 100;
-        updateHealthInCanvas();
+        health.value = 100;
+        //updateHealthInCanvas();
     }
 
 
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        updateHealthInCanvas();
+        health.value -= damage;
+        //updateHealthInCanvas();
     }
 
-    private void updateHealthInCanvas()
-    {
-        text.text = health.ToString();
+    //private void updateHealthInCanvas()
+    //{
+    //    text.text = health.ToString();
 
-    }
+    //}
 
 }

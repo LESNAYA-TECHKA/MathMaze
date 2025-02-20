@@ -2,19 +2,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public int bulletDamage;
+    private int bulletDamage;
     public Vector3 hitPlace;
     public Transform hitTransform;
 
 
     public Vector3 normal;
 
-    public void BulletEffects(string unit)
+    public void BulletEffects(string unit, int bulletDamage)
     {
-        if(unit == "Player")
-        {
-
-        }
+        this.bulletDamage = bulletDamage;
         switch(unit)
         {
             case "Player":
@@ -37,14 +34,14 @@ public class Bullet : MonoBehaviour
 
     private void HitPlayer()
     {
-        var enemie = hitTransform.GetComponent<PlayerHealth>();
-        enemie.TakeDamage(bulletDamage);
+        var player = hitTransform.GetComponent<PlayerHealth>();
+        player.TakeDamage(bulletDamage);
     }
 
 
     private void HitEnemie()
     {
-        var enemie = hitTransform.GetComponent<Enemie>();
+        var enemie = hitTransform.GetComponentInParent<Enemie>();
         enemie.TakeDamage(bulletDamage);
     }
 
@@ -60,7 +57,7 @@ public class Bullet : MonoBehaviour
 
         // Прикрепляем эффект к объекту, в который попали
         hole.transform.SetParent(hitTransform);
-        Debug.Log(hitTransform);
+        //Debug.Log(hitTransform);
     }
 
 

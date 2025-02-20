@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemie : MonoBehaviour
 {
-    [SerializeField] private int HP = 100;
+    [SerializeField] private Slider HpSlider;
 
     private Animator animator;
     private NavMeshAgent navAgent;
@@ -12,6 +13,7 @@ public class Enemie : MonoBehaviour
     private EnemyWeapon enemyWeapon;
     void Start()
     {
+        HpSlider.value = 100;
         navAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = Camera.main.transform;
@@ -55,13 +57,13 @@ public class Enemie : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        HP -= damageAmount;
+        HpSlider.value -= damageAmount;
 
-        if (HP < 0)
+        if (HpSlider.value < 0)
             animator.SetTrigger("Die");
         else
             animator.SetTrigger("Damage");
-        Debug.Log($"{HP}");
+        Debug.Log($"{HpSlider.value}");
 
     }
 

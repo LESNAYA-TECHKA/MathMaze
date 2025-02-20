@@ -30,7 +30,7 @@ public class CreateBullets : MonoBehaviour
                   {
                       creator.stopFire = false;
                       creator.readyToShoot = true;
-                      //creator.animator.SetTrigger("Stop");
+                      creator.animator.SetTrigger("Stop");
                       yield break;
                   }
                   
@@ -39,7 +39,7 @@ public class CreateBullets : MonoBehaviour
             }
             yield return new WaitForSeconds(creator.timeBetweenShots);
             creator.readyToShoot = true;
-           // creator.animator.SetTrigger("Stop");
+            creator.animator.SetTrigger("Stop");
             creator.stopFire = false;
     }
 
@@ -61,7 +61,10 @@ public class CreateBullets : MonoBehaviour
             Vector3 shootingDirection = CaculateDirectionAndSpread().normalized;
             Ray ray = new Ray(creator.bulletSpawn.position, creator.bulletSpawn.forward);
             RaycastHit hit;
-
+            creator.animator.SetTrigger("Shoot");
+            creator.soundSource.PlayOneShot(creator.mySounds.shoot);
+            creator.bulletsLeft--;
+            creator.AmmoUpdate();
             // ѕровер€ем, есть ли столкновение с чем-либо
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
@@ -69,15 +72,10 @@ public class CreateBullets : MonoBehaviour
                 var whereWasHit = hit.point;
                 var normal = hit.normal;
                 Bullet bullet = new Bullet();
-                bullet.bulletDamage = creator.weaponDamage;
                 bullet.hitPlace = whereWasHit;
                 bullet.hitTransform = hitTransform;
                 bullet.normal = normal;
-                bullet.BulletEffects(hit.collider.tag);
-                creator.animator.SetTrigger("Shoot");
-                creator.soundSource.PlayOneShot(creator.mySounds.shoot);
-                creator.bulletsLeft--;
-                creator.AmmoUpdate();
+                bullet.BulletEffects(hit.collider.tag,creator.weaponDamage);       
             }
         }
         else
