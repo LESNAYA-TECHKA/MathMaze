@@ -11,6 +11,8 @@ public class Enemie : MonoBehaviour
     private Transform player;
     private float rotationSpeed = 30f;
     private EnemyWeapon enemyWeapon;
+    private bool Alive = true;
+    [SerializeField] private EnemySounds sounds;
     void Start()
     {
         HpSlider.value = 100;
@@ -19,6 +21,7 @@ public class Enemie : MonoBehaviour
         player = Camera.main.transform;
         enemyWeapon = GetComponent<EnemyWeapon>();
         InvokeRepeating("Shoot",1f,5f);
+
     }
 
 
@@ -59,12 +62,29 @@ public class Enemie : MonoBehaviour
     {
         HpSlider.value -= damageAmount;
 
-        if (HpSlider.value < 0)
-            animator.SetTrigger("Die");
+        if (HpSlider.value <= 0)
+            Die();
         else
             animator.SetTrigger("Damage");
         Debug.Log($"{HpSlider.value}");
 
     }
+
+    private void Die()
+    {
+        if (Alive)
+        {
+            Alive = false;
+            animator.SetTrigger("Die");
+            enemyWeapon.soundSource.PlayOneShot(sounds.Die);
+        }
+
+    }
+
+    public void Destroy()
+    {
+        Destroy(this.gameObject);     
+    }
+
 
 }

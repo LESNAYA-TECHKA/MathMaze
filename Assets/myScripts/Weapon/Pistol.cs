@@ -11,7 +11,6 @@ public class Pistol : Weapon
         spreadIntensity = 0.1f;
         //how many bullets we shoot
         bulletsPerBurst = 1;
-        bulletVelocity = 500;
         timeBetweenShots = 0f;
         weaponDamage = 20;
         weapon = new SingleShoot(this);

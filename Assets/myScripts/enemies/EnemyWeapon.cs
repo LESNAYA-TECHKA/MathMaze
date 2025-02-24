@@ -9,7 +9,6 @@ public class EnemyWeapon : Weapon
         spreadIntensity = 2f;
         //how many bullets we shoot
         bulletsPerBurst = 1;
-        bulletVelocity = 10;
         timeBetweenShots = 0.1f;
         weaponDamage = 10;
         weapon = new SingleShoot(this);

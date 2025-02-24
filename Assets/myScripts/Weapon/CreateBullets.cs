@@ -103,10 +103,10 @@ public class CreateBullets : MonoBehaviour
         return new Vector3(0, y, z);
     }
 
-    private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        Destroy(bullet);
-    }
+    //private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
+    //{
+    //    yield return new WaitForSeconds(delay);
+    //    Destroy(bullet);
+    //}
 
 }

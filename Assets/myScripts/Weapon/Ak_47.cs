@@ -10,7 +10,6 @@ public class Ak_47:Weapon
         spreadIntensity = 2f;
         //how many bullets we shoot
         bulletsPerBurst = 30;
-        bulletVelocity = 500;
         timeBetweenShots = 0.1f;
         weaponDamage = 10;
         weapon = new AutoShoot(this);

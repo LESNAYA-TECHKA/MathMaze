@@ -9,7 +9,6 @@ public abstract class Weapon : MonoBehaviour
     public Camera playerCamera { get; private set; }
     public float spreadIntensity;
     public int bulletsPerBurst;
-    public float bulletVelocity;
     public float bulletLifeTime = 3f;
     public bool readyToShoot = true;
     public float timeBetweenShots;
