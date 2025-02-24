@@ -1,12 +1,10 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet: MonoBehaviour
 {
     private int bulletDamage;
     public Vector3 hitPlace;
     public Transform hitTransform;
-
-
     public Vector3 normal;
 
     public void BulletEffects(string unit, int bulletDamage)
@@ -81,41 +79,41 @@ public class Bullet : MonoBehaviour
 
 
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            Debug.Log($"HIT {collision.gameObject.name} !");
-            CreateBulletImpactEffect(collision);
-            Destroy(gameObject);
-        }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Wall"))
+    //    {
+    //        Debug.Log($"HIT {collision.gameObject.name} !");
+    //        CreateBulletImpactEffect(collision);
+    //        Destroy(gameObject);
+    //    }
 
-        if (collision.gameObject.CompareTag("Enemie"))
-        {
-            collision.gameObject.GetComponent<Enemie>().TakeDamage(bulletDamage);
-            Destroy(gameObject);
-        }
+    //    if (collision.gameObject.CompareTag("Enemie"))
+    //    {
+    //        collision.gameObject.GetComponent<Enemie>().TakeDamage(bulletDamage);
+    //        Destroy(gameObject);
+    //    }
 
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Hit Character");
-        }
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        Debug.Log("Hit Character");
+    //    }
 
-    }
+    //}
 
-    private void CreateBulletImpactEffect(Collision objectHit)
-    {
-        ContactPoint contact = objectHit.GetContact(0);
+    //private void CreateBulletImpactEffect(Collision objectHit)
+    //{
+    //    ContactPoint contact = objectHit.GetContact(0);
 
-        GameObject hole = Instantiate(
-            GlobalReferences.instance.bulletEffectsPrefab,
-            contact.point,
-            Quaternion.LookRotation(contact.normal)
-            );
+    //    GameObject hole = Instantiate(
+    //        GlobalReferences.instance.bulletEffectsPrefab,
+    //        contact.point,
+    //        Quaternion.LookRotation(contact.normal)
+    //        );
 
 
-        hole.transform.SetParent(objectHit.gameObject.transform);
+    //    hole.transform.SetParent(objectHit.gameObject.transform);
 
-    }
+    //}
 
 }

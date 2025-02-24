@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CreateBullets : MonoBehaviour
+public class CreateBullets
 {
     Weapon creator;
     int createBullets = 0;
@@ -56,10 +56,10 @@ public class CreateBullets : MonoBehaviour
 
             //creator.StartCoroutine(DestroyBulletAfterTime(bullet, creator.bulletLifeTime));
 
+            Camera camera = Camera.main;
 
-
-            Vector3 shootingDirection = CaculateDirectionAndSpread().normalized;
-            Ray ray = new Ray(creator.bulletSpawn.position, creator.bulletSpawn.forward);
+            Vector3 shootingDirection = CaculateDirectionAndSpread(camera);
+            Ray ray = new Ray(creator.bullerSpawnPosition.transform.position, shootingDirection);
             RaycastHit hit;
             creator.animator.SetTrigger("Shoot");
             creator.soundSource.PlayOneShot(creator.mySounds.shoot);
@@ -75,32 +75,31 @@ public class CreateBullets : MonoBehaviour
                 bullet.hitPlace = whereWasHit;
                 bullet.hitTransform = hitTransform;
                 bullet.normal = normal;
-                bullet.BulletEffects(hit.collider.tag,creator.weaponDamage);       
+                bullet.BulletEffects(hit.collider.tag,creator.weaponDamage);
+                Debug.Log(hit.collider.tag);
             }
         }
         else
             creator.soundSource.PlayOneShot(creator.mySounds.empty);
   
     }
-    private Vector3 CaculateDirectionAndSpread()
+    private Vector3 CaculateDirectionAndSpread(Camera cam)
     {
-        Ray ray = creator.playerCamera.ViewportPointToRay(new Vector3(1f, 1f, 0));
-        RaycastHit hit;
-        Vector3 targetPoint;
-        if (Physics.Raycast(ray, out hit))
-        {
-            targetPoint = hit.point;
-        }
-        else
-        {
-            targetPoint = ray.GetPoint(100);
-        }
+        // ”меньшаем диапазон случайного смещени€
+        float spreadFactor = 0.01f; //дл€ контрол€ интенсивности разброса
+        float x = UnityEngine.Random.Range(-creator.spreadIntensity, creator.spreadIntensity) * spreadFactor;
+        float y = UnityEngine.Random.Range(-creator.spreadIntensity, creator.spreadIntensity) * spreadFactor;
 
-        Vector3 direction = targetPoint - creator.bulletSpawn.position;
-        float z = UnityEngine.Random.Range(-creator.spreadIntensity, creator.spreadIntensity);
-        float y = UnityEngine.Random.Range(-creator.spreadIntensity, creator.spreadIntensity);
+        // ѕолучаем направление взгл€да камеры
+        Vector3 cameraForward = creator.bullerSpawnPosition.transform.forward;
 
-        return new Vector3(0, y, z);
+        // —оздаем случайное смещение относительно направлени€ камеры
+        Vector3 spreadDirection = new Vector3(x, y, 0);
+
+        // ƒобавл€ем смещение к направлению камеры и нормализуем результат
+        Vector3 shootingDirection = (cameraForward + spreadDirection).normalized;
+
+        return shootingDirection;
     }
 
     //private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)

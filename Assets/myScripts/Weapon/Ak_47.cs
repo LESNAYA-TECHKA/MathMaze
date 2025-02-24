@@ -3,11 +3,18 @@ using UnityEngine;
 
 public class Ak_47:Weapon
 {
+
+    private void Start()
+    {
+        bullerSpawnPosition = Camera.main.gameObject;
+    }
+
+
     public Ak_47()
     {
         timeBetweenShots = 0.01f;
         magazineSize = 30;
-        spreadIntensity = 2f;
+        spreadIntensity = 3f;
         //how many bullets we shoot
         bulletsPerBurst = 30;
         timeBetweenShots = 0.1f;

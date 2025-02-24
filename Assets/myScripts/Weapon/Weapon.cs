@@ -4,8 +4,6 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
     public Camera playerCamera { get; private set; }
     public float spreadIntensity;
     public int bulletsPerBurst;
@@ -25,6 +23,8 @@ public abstract class Weapon : MonoBehaviour
 
     public bool canSwitch = true;
 
+    public GameObject bullerSpawnPosition;
+
     protected void Awake()
     {
         animator = GetComponent<Animator>();
@@ -38,6 +38,7 @@ public abstract class Weapon : MonoBehaviour
     {
         if (AmmoManager.instance.text != null)
             AmmoManager.instance.text.text = $"{bulletsLeft}/{magazineSize}";
+        
 
     }
 

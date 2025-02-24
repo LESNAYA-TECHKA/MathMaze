@@ -6,7 +6,7 @@ public class EnemyWeapon : Weapon
     {
         timeBetweenShots = 0.01f;
         magazineSize = int.MaxValue;
-        spreadIntensity = 2f;
+        spreadIntensity = 0f;
         //how many bullets we shoot
         bulletsPerBurst = 1;
         timeBetweenShots = 0.1f;
