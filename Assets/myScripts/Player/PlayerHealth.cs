@@ -25,7 +25,7 @@ public class PlayerHealth : MonoBehaviour
         health.value = 100;
 
         HealthValue.Value = health.value;
-        Debug.Log(HealthValue.Value);
+        //Debug.Log(HealthValue.Value);
         //updateHealthInCanvas();
     }
 
@@ -35,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
     {
         health.value -= damage;
         HealthValue.Value -= damage;
-        Debug.Log(HealthValue.Value);
+       // Debug.Log(HealthValue.Value);
         //updateHealthInCanvas();
     }
 

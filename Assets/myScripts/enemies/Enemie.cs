@@ -34,7 +34,7 @@ public class Enemie : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         // Плавный поворот к игроку
         Vector3 direction = (player.position - transform.position).normalized;
@@ -66,7 +66,7 @@ public class Enemie : MonoBehaviour
             Die();
         else
             animator.SetTrigger("Damage");
-        Debug.Log($"{HpSlider.value}");
+       // Debug.Log($"{HpSlider.value}");
 
     }
 
